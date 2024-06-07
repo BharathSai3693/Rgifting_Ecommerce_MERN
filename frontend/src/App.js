@@ -1,55 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-
-
-import { AuthProvider } from './AuthContext'; // Import AuthProvider
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import { AuthProvider, useAuth } from "./AuthContext"; // Import AuthProvider
+import Navbar from "./Components/Navbar";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-          </ul>
-        </nav>
-        <hr></hr>
-        <Routes>
-          <Route path="/" element={<AuthProvider>
-                <Login />
-              </AuthProvider> } />
-          <Route path="/login" element={<AuthProvider>
-                <Login />
-              </AuthProvider>} />
-          <Route path="/signup" element={
-              <AuthProvider>
-                <Signup />
-              </AuthProvider>} />
-          
-          {/* Wrap protected routes with AuthProvider */}
-          <Route
-            path="/dashboard"
-            element={
-              <AuthProvider>
-                <Login />
-              </AuthProvider>
-            }
-          />
-        </Routes>
-      </div>
+      <AuthProvider>
+        <div>
+          <Navbar />
+          <hr></hr>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Login />} />
+          </Routes>
+        </div>
+      </AuthProvider>
     </Router>
   );
 };
