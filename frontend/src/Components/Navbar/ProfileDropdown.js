@@ -8,7 +8,7 @@ function ProfileDropdown() {
     console.log("Logged out");
   };
   return (
-    <div className="absolute right-0 w-48 bg-white border border-gray-200 rounded shadow-lg">
+    <div className="absolute right-0 w-48 bg-white border border-gray-200 rounded shadow-lg z-50">
       <Link
         to="/settings"
         className="block px-4 py-2 text-gray-800 hover:bg-gray-100"

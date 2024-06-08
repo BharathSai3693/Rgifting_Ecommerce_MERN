@@ -20,6 +20,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await signIn(email, password);
+      console.log("Login", currentUser)
     } catch (error) {
       console.error("Error signing in:", error);
     }
