@@ -7,16 +7,18 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { AuthProvider, useAuth } from "./AuthContext"; // Import AuthProvider
+import { AuthProvider } from "./AuthContext"; // Import AuthProvider
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./pages/Home";
 import AdminRoute from "./Routes/AdminRoute";
-import AdminDashboard from "./pages/AdminDashboard";
+import AdminDashboard from "./pages/adminpages/AdminDashboard";
 import Items from "./pages/Items";
 import Giftpage from "./pages/Giftpage";
 import ShoppingCart from "./pages/ShoppingCart";
+import AdminLayout from "./Components/admin/AdminLayout";
 
 const App = () => {
+  
   return (
     <Router>
       <AuthProvider>
@@ -30,15 +32,20 @@ const App = () => {
             <Route path="/items" element={<Items />} />
             <Route path="/gift" element={<Giftpage />} />
             <Route path="/cart" element={<ShoppingCart />} />
-            
+
             <Route
-              path="/additems"
+              path="/admin"
               element={
                 <AdminRoute>
-                  <AdminDashboard />
+                  <AdminLayout />
                 </AdminRoute>
               }
-            />
+            >
+              <Route path="dashboard" element={<AdminDashboard />} />
+              {/* <Route path="additems" element={<AddItems />} /> */}
+              {/* Add more admin routes as needed */}
+            </Route>
+            
           </Routes>
         </div>
       </AuthProvider>
