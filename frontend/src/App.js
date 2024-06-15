@@ -3,28 +3,25 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./AuthContext"; // Import AuthProvider
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./pages/Home";
-import AdminRoute from "./Routes/AdminRoute";
-import AdminDashboard from "./pages/adminpages/AdminDashboard";
 import Items from "./pages/Items";
 import Giftpage from "./pages/Giftpage";
 import ShoppingCart from "./pages/ShoppingCart";
-import AdminLayout from "./Components/admin/AdminLayout";
+import AdminDashboard from "./pages/adminpages/AdminDashboard"
+
 
 const App = () => {
-  
   return (
     <Router>
       <AuthProvider>
         <div>
-          <Navbar />
-          <hr></hr>
+          {/* <Navbar /> */}
+          <hr />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -33,19 +30,9 @@ const App = () => {
             <Route path="/gift" element={<Giftpage />} />
             <Route path="/cart" element={<ShoppingCart />} />
 
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminLayout />
-                </AdminRoute>
-              }
-            >
-              <Route path="dashboard" element={<AdminDashboard />} />
-              {/* <Route path="additems" element={<AddItems />} /> */}
-              {/* Add more admin routes as needed */}
-            </Route>
-            
+            <Route path="/admin" element={
+              <AdminDashboard />
+            }></Route>
           </Routes>
         </div>
       </AuthProvider>

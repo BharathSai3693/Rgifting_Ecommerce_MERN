@@ -12,7 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     if (currentUser) {
-      navigate('/');
+      navigate('/admin');
     }
   }, [currentUser, navigate]);
 
