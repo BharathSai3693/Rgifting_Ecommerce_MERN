@@ -23,7 +23,7 @@ const GiftTags = () => {
       };
 
   return (
-    <div className="col-span-3 p-3 mx-16">
+    <div className="col-span-3 mx-16 p-3 border border-yellow-600 rounded">
       <label
         htmlFor="highlights"
         className="block text-sm font-medium leading-6 text-gray-900 mb-2"

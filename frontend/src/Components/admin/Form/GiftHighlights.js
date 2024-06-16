@@ -27,7 +27,7 @@ const GiftHighlights = () => {
   };
 
   return (
-    <div className="col-span-3 p-3">
+    <div className="col-span-3 p-3 border border-yellow-600 rounded">
       <label
         htmlFor="highlights"
         className="block text-sm font-medium leading-6 text-gray-900"

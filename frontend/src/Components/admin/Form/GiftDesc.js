@@ -2,7 +2,7 @@ import React from "react";
 
 const GiftDesc = () => {
   return (
-    <div className="col-span-full">
+    <div className="col-span-full p-3 border border-yellow-600 rounded">
       <label
         htmlFor="about"
         className="block text-sm font-medium leading-6 text-gray-900"

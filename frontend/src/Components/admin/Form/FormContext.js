@@ -5,7 +5,10 @@ export const FormContext = createContext();
 
 // Create a provider component
 export const FormProvider = ({ children }) => {
-  const [coverPhotos, setCoverPhotos] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState({});
+
+  const [Photos, setPhotos] = useState([]);
+
   const [highlights, setHighlights] = useState(['']);
 
   const [variants, setVariants] = useState({
@@ -22,17 +25,9 @@ export const FormProvider = ({ children }) => {
 
   
 
-  const addPhoto = (photo) => {
-    setCoverPhotos((prevPhotos) => [...prevPhotos, photo]);
-  };
-
-  const removePhoto = (index) => {
-    setCoverPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
-  };
-
 
   return (
-    <FormContext.Provider value={{ coverPhotos, addPhoto, removePhoto, highlights, setHighlights, checkedTags, setCheckedTags, variants, setVariants, checkedVariants, setCheckedVariants }}>
+    <FormContext.Provider value={{ Photos, setPhotos, highlights, setHighlights, checkedTags, setCheckedTags, variants, setVariants, checkedVariants, setCheckedVariants, selectedCategories, setSelectedCategories }}>
       {children}
     </FormContext.Provider>
   );

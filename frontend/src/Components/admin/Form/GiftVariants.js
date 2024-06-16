@@ -52,7 +52,7 @@ const GiftVariants = () => {
   };
 
   return (
-    <div className="col-span-full p-3 shadow">
+    <div className="col-span-full p-3 border border-yellow-600 rounded">
       <label
         htmlFor="highlights"
         className="block text-sm font-medium leading-6 text-gray-900 py-3"
