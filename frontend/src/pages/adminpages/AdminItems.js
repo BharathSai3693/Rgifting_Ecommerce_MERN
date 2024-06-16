@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Itemsflex from '../../Components/Itemspage/Itemsflex';
 import ItemsForm from '../../Components/admin/Form/ItemsForm';
+import { FormProvider } from '../../Components/admin/Form/FormContext';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,7 +57,9 @@ export default function AdminItems() {
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
+      <FormProvider>
         <ItemsForm />
+        </FormProvider>
       </CustomTabPanel>
      
     </Box>

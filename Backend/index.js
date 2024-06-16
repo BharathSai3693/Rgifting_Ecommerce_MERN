@@ -16,6 +16,7 @@ mongoose.connect(MONGO_URI)
 
 // Routes
 app.use('/api/gifts', require('./routes/gifts'));
+app.use('/admin', require('./routes/admins'))
 
 // Start server
 app.listen(PORT, () => {

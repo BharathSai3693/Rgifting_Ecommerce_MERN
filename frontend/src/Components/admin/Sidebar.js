@@ -10,13 +10,13 @@ const Sidebar = () => {
   const sideBarStyle = "bg-red-950 hover:bg-red-700 text-white p-2 rounded-sm w-100";
 
   return (
-    <div className="sidebar flex flex-col justify-between min-h-screen bg-red-500 col-span-1 py-5">
+    <div className="sidebar flex flex-col justify-between h-screen bg-red-500 col-span-1">
       <div className="flex flex-col">
-        <h2>Logo</h2>
-        <Link className={sideBarStyle} to="/admin/dashboard">
+        <Logo tclass={"w-16 h-16 mx-auto mb-3"} />
+        <Link className={sideBarStyle} to="/admin">
           Dashboard
         </Link>
-        <Link className={sideBarStyle} to="/admin/additems">
+        <Link className={sideBarStyle} to="/admin/items">
           Items
         </Link>
         <Link className={sideBarStyle} to="/admin/orders">

@@ -1,6 +1,4 @@
-import React from "react";
-import Highlights from "./GiftHighlights";
-import { FormProvider } from "./FormContext";
+import React, { useContext } from "react";
 import Giftname from "./Giftname";
 import GiftPrice from "./GiftPrice";
 import GiftSummary from "./GiftSummary";
@@ -10,12 +8,18 @@ import GiftTags from "./GiftTags";
 import GiftVariants from "./GiftVariants";
 import GiftPhotos from "./GiftPhotos";
 import GiftCategory from "./GiftCategory";
-
+import { FormContext } from "./FormContext";
 
 const ItemsForm = () => {
+  const {name, price,summary, desc, Photos, highlights, checkedTags, variants, checkedVariants, selectedCategories } = useContext(FormContext);
+
+  const handleSubmit = (e) => {
+
+    
+  }
+
   return (
     <div className="p-8 py-0">
-      <FormProvider>
         <form>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
@@ -47,21 +51,17 @@ const ItemsForm = () => {
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Cancel
-            </button>
+           
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={(e)=> handleSubmit()}
+              className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Save
             </button>
           </div>
         </form>
-      </FormProvider>
+
     </div>
   );
 };

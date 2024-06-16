@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { FormContext } from "./FormContext";
 
 const Giftname = () => {
+
+  const {name, setName} = useContext(FormContext);
+
+  const handleChange = (e) => {
+    setName(e.target.value);
+  };
+
+
+
   return (
     <div className="col-span-2">
       <label
@@ -17,6 +27,8 @@ const Giftname = () => {
             id="username"
             className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
             placeholder="Enter Gift Name"
+            value={name}
+            onChange={(event)=>handleChange(event)}
           />
         </div>
       </div>

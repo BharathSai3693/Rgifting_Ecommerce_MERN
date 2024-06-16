@@ -38,7 +38,7 @@ const Navbar = () => {
   return (
     <nav className="text-white flex flex-row justify-between p-3 bg-red-500">
       <div className="basis-1/3">
-        <Logo />
+        <Logo tclass={"w-15 h-10"} />
       </div>
  
       <div className="flex flex-row items-center justify-start basis-1/2">
