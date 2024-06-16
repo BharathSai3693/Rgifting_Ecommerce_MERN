@@ -1,13 +1,36 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-console.log(process.env.MONGO_URI)
+const cors = require('cors');
+const { S3Client } = require('@aws-sdk/client-s3');
+
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
+// Initialize AWS S3
+// const s3 = new aws.S3({
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//     region: process.env.AWS_REGION,
+//   });
+const s3Client = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      },
+  });
+global.s3Client = s3Client;
+
+
 // Middleware
 app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:3000',
+  }));
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI)
@@ -15,8 +38,10 @@ mongoose.connect(MONGO_URI)
     .catch(err => console.error(err));
 
 // Routes
-app.use('/api/gifts', require('./routes/gifts'));
-app.use('/admin', require('./routes/admins'))
+app.use('/users', require('./routes/users'));
+app.use('/admin', require('./routes/admins'));
+
+
 
 // Start server
 app.listen(PORT, () => {

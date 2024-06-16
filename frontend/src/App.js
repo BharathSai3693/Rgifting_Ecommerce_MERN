@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./AuthContext"; // Import AuthProvider
-import Navbar from "./Components/Navbar/Navbar";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
 import Giftpage from "./pages/Giftpage";
