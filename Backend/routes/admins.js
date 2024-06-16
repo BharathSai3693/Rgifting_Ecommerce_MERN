@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Gift = require('../models/Gift');
 
-// Get all users
+// Get all gifts
 router.get('/', async (req, res) => {
     try {
-        const users = await Gift.find();
-        res.json(users);
+        const gifts = await Gift.find();
+        res.json(gifts);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
