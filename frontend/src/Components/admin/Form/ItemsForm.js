@@ -25,21 +25,37 @@ const ItemsForm = () => {
   } = useContext(FormContext);
 
   const handleSubmit = async (e) => {
-    const formData = new FormData();
+
 
     e.preventDefault();
-    const textData = {
-      name,
-      price,
-      summary,
-      desc,
-      highlights,
-      checkedTags,
-      checkedVariants,
-      selectedCategories,
-    };
-    formData.append("textData", textData);
-    formData.append("giftPhotos", Photos);
+    // const textData = {
+    //   name,
+    //   price,
+    //   summary,
+    //   desc,
+    //   highlights,
+    //   checkedTags,
+    //   checkedVariants,
+    //   selectedCategories,
+    // };
+    // formData.append("textData", textData);
+    // formData.append("giftPhotos", Photos);
+    const formData = new FormData();
+
+  // Append text fields
+  formData.append("name", name);
+  formData.append("price", price);
+  formData.append("summary", summary);
+  formData.append("desc", desc);
+  formData.append("highlights", highlights);
+  formData.append("checkedTags", JSON.stringify(checkedTags));
+  formData.append("checkedVariants", JSON.stringify(checkedVariants));
+  formData.append("selectedCategories", JSON.stringify(selectedCategories));
+
+  // Append files
+  Photos.forEach((photo, index) => {
+    formData.append(`giftPhotos`, photo);
+  });
 
     console.log(formData);
 
