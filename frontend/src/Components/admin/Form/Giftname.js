@@ -14,7 +14,6 @@ const Giftname = () => {
   return (
     <div className="col-span-2">
       <label
-
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         Gift Name

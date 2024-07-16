@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
 import { FormContext } from './FormContext';
 
-
 const categoryData = [
   {
     category: 'Occasion',
-    subcategories: ['Birthday', 'Anniversary', 'Wedding & Engagement', 'House Waring', "Baby Shower", "Best Wishes"]
+    subcategories: ['Birthday', 'Anniversary', 'Wedding & Engagement', 'House Waring', 'Baby Shower', 'Best Wishes']
   },
   {
     category: 'Special Days',
-    subcategories: ["Father's Day", "Mother's Day", "Teacher's Day"]
+    subcategories: ['Father\'s Day', 'Mother\'s Day', 'Teacher\'s Day']
   },
   {
     category: 'Recipient',
@@ -22,28 +21,37 @@ const GiftCategory = () => {
 
   const handleCategoryChange = (event, category) => {
     const isChecked = event.target.checked;
-    setSelectedCategories(prevState => ({
-      ...prevState,
-      [category]: {
-        ...prevState[category],
-        isSelected: isChecked
+
+    setSelectedCategories(prevState => {
+      const newSelectedCategories = { ...prevState };
+      if (isChecked) {
+        newSelectedCategories[category] = [];
+      } else {
+        delete newSelectedCategories[category];
       }
-    }));
-    console.log(selectedCategories)
+      return newSelectedCategories;
+    });
   };
 
   const handleSubcategoryChange = (event, category, subcategory) => {
     const isChecked = event.target.checked;
-    setSelectedCategories(prevState => ({
-      ...prevState,
-      [category]: {
-        ...prevState[category],
-        subcategories: {
-          ...prevState[category]?.subcategories,
-          [subcategory]: isChecked
-        }
+
+    setSelectedCategories(prevState => {
+      const newSelectedCategories = { ...prevState };
+
+      if (isChecked) {
+        newSelectedCategories[category] = [...newSelectedCategories[category], subcategory];
+      } else {
+        newSelectedCategories[category] = newSelectedCategories[category].filter(item => item !== subcategory);
       }
-    }));
+
+      // If all subcategories are unchecked, remove the category key
+      if (newSelectedCategories[category].length === 0) {
+        delete newSelectedCategories[category];
+      }
+
+      return newSelectedCategories;
+    });
   };
 
   return (
@@ -62,7 +70,7 @@ const GiftCategory = () => {
                 type="checkbox"
                 id={category}
                 name={category}
-                checked={selectedCategories[category]?.isSelected || false}
+                checked={!!selectedCategories[category]}
                 onChange={(event) => handleCategoryChange(event, category)}
               />
               <label htmlFor={category} className="ml-2">{category}</label>
@@ -74,9 +82,9 @@ const GiftCategory = () => {
                     type="checkbox"
                     id={`${category}-${subcategory}`}
                     name={`${category}-${subcategory}`}
-                    checked={selectedCategories[category]?.subcategories?.[subcategory] || false}
+                    checked={selectedCategories[category]?.includes(subcategory) || false}
                     onChange={(event) => handleSubcategoryChange(event, category, subcategory)}
-                    disabled={!selectedCategories[category]?.isSelected}
+                    disabled={!selectedCategories[category]}
                   />
                   <label htmlFor={`${category}-${subcategory}`} className="ml-2">{subcategory}</label>
                 </div>

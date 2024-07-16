@@ -25,39 +25,29 @@ const ItemsForm = () => {
   } = useContext(FormContext);
 
   const handleSubmit = async (e) => {
-
-
     e.preventDefault();
-    // const textData = {
-    //   name,
-    //   price,
-    //   summary,
-    //   desc,
-    //   highlights,
-    //   checkedTags,
-    //   checkedVariants,
-    //   selectedCategories,
-    // };
-    // formData.append("textData", textData);
-    // formData.append("giftPhotos", Photos);
     const formData = new FormData();
 
-  // Append text fields
-  formData.append("name", name);
-  formData.append("price", price);
-  formData.append("summary", summary);
-  formData.append("desc", desc);
-  formData.append("highlights", highlights);
-  formData.append("checkedTags", JSON.stringify(checkedTags));
-  formData.append("checkedVariants", JSON.stringify(checkedVariants));
-  formData.append("selectedCategories", JSON.stringify(selectedCategories));
+    // Append text fields
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("summary", summary);
+    formData.append("desc", desc);
+    formData.append("highlights", highlights);
+    formData.append("checkedTags", checkedTags);
+    const variantResult = {};
+    for (const [variant, valuesSet] of Object.entries(checkedVariants)) {
+      variantResult[variant] = Array.from(valuesSet);
+    }
 
-  // Append files
-  Photos.forEach((photo, index) => {
-    formData.append(`giftPhotos`, photo);
-  });
+    formData.append("checkedVariants", JSON.stringify(variantResult));
+    formData.append("selectedCategories", JSON.stringify(selectedCategories));
 
-    console.log(formData);
+    // Append files
+    Photos.forEach((photo, index) => {
+      formData.append(`giftPhotos`, photo);
+    });
+
 
     try {
       const response = await fetch("http://localhost:4000/admin/newGift", {

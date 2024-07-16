@@ -21,10 +21,10 @@ export const FormProvider = ({ children }) => {
    Colors : new Set()
   })
 
-  const [checkedTags, setCheckedTags] = useState({});
+  const [checkedTags, setCheckedTags] = useState([]);
 
-  const [name, setName] = useState();
-  const [price, setPrice] = useState();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState('');
   const [summary, setSummary] = useState('');
   const [desc, setDesc] = useState('');
 

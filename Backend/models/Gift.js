@@ -26,33 +26,35 @@ const GiftSchema = new mongoose.Schema({
         type: [String], // Array of highlight strings
         required: false,
     },
-    variants: {
-        sizes: {
-            type: [String], // Array of size options
-            required: false,
-        },
-        colors: {
-            type: [String], // Array of color options
-            required: false,
-        },
-    },
+    
     checkedVariants: {
-        sizes: {
-            type: [String], // Array of selected sizes
-            required: false,
-        },
-        colors: {
-            type: [String], // Array of selected colors
-            required: false,
-        },
+        type: [{
+            type: {
+                type: String,
+                required: true,
+            },
+            values: {
+                type: [String],
+                required: true,
+            },
+        }],
+        required: false,
     },
     checkedTags: {
         type: [String], // Array of tags
         required: false,
     },
     selectedCategories: {
-        type: Map,
-        of: Boolean, // Map of categories with boolean values indicating selection
+        type: [{
+            type: {
+                type: String,
+                required: true,
+            },
+            values: {
+                type: [String],
+                required: true,
+            },
+        }],
         required: false,
     },
 });
