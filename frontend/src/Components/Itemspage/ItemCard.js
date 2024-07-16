@@ -4,21 +4,22 @@ import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 import ItemTitle from "./ItemTitle";
 import ItemDetails from "./ItemDetails";
 
-function ItemCard() {
-  const src =
-    "https://cdn.igp.com/f_auto,q_auto,t_pnopt19prodlp/products/p-chocolate-ecstasy-father-s-day-cake-300-gm--285193-m.jpg";
+function ItemCard({gift}) {
+  // const src ="https://cdn.igp.com/f_auto,q_auto,t_pnopt19prodlp/products/p-chocolate-ecstasy-father-s-day-cake-300-gm--285193-m.jpg";
+ 
+  const src = gift.photos[0]
+  // const badges = [
+  //   "Personalisable",
+  //   "Same Day Delivery",
+  //   "Badge",
+  //   "Badge",
+  //   "Badge",
+  //   "Badge",
+  //   "Badge",
+  //   "Badge",
+  // ];
 
-  const badges = [
-    "Personalisable",
-    "Same Day Delivery",
-    "Badge",
-    "Badge",
-    "Badge",
-    "Badge",
-    "Badge",
-    "Badge",
-  ];
-
+  const badges = gift.checkedTags
   const handleFavouriteClick = () => {
     // Handle the logic for adding to favourites
     console.log("Added to favourites");
@@ -39,8 +40,8 @@ function ItemCard() {
         <FontAwesomeIcon icon={faRegularHeart} />
       </button>
       <div className="p-3 h-1/4 flex flex-col justify-between">
-        <ItemTitle />
-        <ItemDetails />
+        <ItemTitle title={gift.name} />
+        <ItemDetails price={gift.price}/>
         <div className="flex mt-1 h-full overflow-x-auto whitespace-nowrap">
           {badges.map((badge, index) => (
             <span

@@ -26,18 +26,9 @@ const GiftSchema = new mongoose.Schema({
         type: [String], // Array of highlight strings
         required: false,
     },
-    
     checkedVariants: {
-        type: [{
-            type: {
-                type: String,
-                required: true,
-            },
-            values: {
-                type: [String],
-                required: true,
-            },
-        }],
+        type: Map,
+        of: [String], // The values in the map will be arrays of strings
         required: false,
     },
     checkedTags: {
@@ -45,16 +36,8 @@ const GiftSchema = new mongoose.Schema({
         required: false,
     },
     selectedCategories: {
-        type: [{
-            type: {
-                type: String,
-                required: true,
-            },
-            values: {
-                type: [String],
-                required: true,
-            },
-        }],
+        type: Map,
+        of: [String], // The values in the map will be arrays of strings
         required: false,
     },
 });

@@ -1,9 +1,9 @@
 import React from "react";
 
-function ItemTitle() {
+function ItemTitle({title}) {
   return (
     <p className="text-sm font-semibold text-start mb-2">
-      Vanilla Ecstasy Father's Day Cake (250 Gm)
+      {title}
     </p>
   );
 }
