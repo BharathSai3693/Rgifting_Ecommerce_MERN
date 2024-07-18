@@ -27,17 +27,11 @@ function Itemsflex() {
         {
           gifts.map(gift => {
             return (
-              <ItemCard gift={gift} />
+              <ItemCard key={gift._id} gift={gift} />
             )
           })
         }
-        {
-          gifts.map(gift => {
-            return (
-              console.log(gift)
-            )
-          })
-        }
+        
        
      
        {/* <ItemCard />

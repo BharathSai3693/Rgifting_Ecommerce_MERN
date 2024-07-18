@@ -1,23 +1,9 @@
 import React, { useContext } from 'react';
 import { FormContext } from './FormContext';
 
-const categoryData = [
-  {
-    category: 'Occasion',
-    subcategories: ['Birthday', 'Anniversary', 'Wedding & Engagement', 'House Waring', 'Baby Shower', 'Best Wishes']
-  },
-  {
-    category: 'Special Days',
-    subcategories: ['Father\'s Day', 'Mother\'s Day', 'Teacher\'s Day']
-  },
-  {
-    category: 'Recipient',
-    subcategories: ['Men', 'Women', 'Kids', 'Couples']
-  }
-];
 
 const GiftCategory = () => {
-  const { selectedCategories, setSelectedCategories } = useContext(FormContext);
+  const { categories, selectedCategories, setSelectedCategories } = useContext(FormContext);
 
   const handleCategoryChange = (event, category) => {
     const isChecked = event.target.checked;
@@ -63,7 +49,7 @@ const GiftCategory = () => {
         Categories
       </label>
       <div>
-        {categoryData.map(({ category, subcategories }) => (
+        {categories.map(({ category, subcategories }) => (
           <div key={category} className="mb-4">
             <div>
               <input

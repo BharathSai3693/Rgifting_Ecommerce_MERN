@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Gift = require("../models/Gift");
+const Setting = require("../models/Setting")
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -59,15 +60,33 @@ router.post("/newGift", upload.array("giftPhotos", 10), async (req, res) => {
   res.json({ success: "sucess" });
 });
 
-router.get("/giftImages", async (req, res) => {
-  const command = new GetObjectCommand({
-    Bucket: "rgiftingz",
-    Key: "20220829_233332-COLLAGE.jpg",
-  });
-  const url = await getSignedUrl(s3Client, command, { expiresIn: 60 });
-  console.log(url);
-  res.json({ url: url });
-});
+
+// Fetch Settings
+router.get("/settings", async (req,res)=> {
+  const settings = await Setting.find();
+  res.json({settings : settings})
+})
+
+router.put("/settings",upload.none(), async (req,res)=> {
+
+  var newTags = JSON.parse(req.body.settings);
+  newTags = newTags.filter(tag => tag.trim() !== ''); 
+  try {
+    const result = await Setting.findOneAndUpdate(
+      { settingType: 'Tags' },
+      { $set: { settings:  newTags} },
+      { new: true, upsert: true }
+    );
+
+    if (result) {
+      res.json({ message: 'Settings updated successfully' });
+    } else {
+      res.status(404).json({ message: 'SettingType "Tags" not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
 
 // Export the router
 module.exports = router;

@@ -8,28 +8,30 @@ import Items from "./pages/Items";
 import Giftpage from "./pages/Giftpage";
 import ShoppingCart from "./pages/ShoppingCart";
 import AdminDashboard from "./pages/adminpages/AdminDashboard";
-import AdminLayout from "./Components/admin/AdminLayout";
+import AdminLayout from "./Layouts/AdminLayout";
 import AdminItems from "./pages/adminpages/AdminItems";
+import Navbar from "./Components/Navbar/Navbar";
+import UserLayout from "./Layouts/UserLayout";
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <div>
-          {/* <Navbar /> */}
           <hr />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/items" element={<Items />} />
-            <Route path="/gift" element={<Giftpage />} />
-            <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/" element={<UserLayout />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="items" element={<Items />} />
+              <Route path="gift" element={<Giftpage />} />
+              <Route path="cart" element={<ShoppingCart />} />
+            </Route>
 
-            <Route element={<AdminLayout />}>
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/items" element={<AdminItems />} />
-              
+            <Route path="admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="items" element={<AdminItems />} />
             </Route>
           </Routes>
         </div>
