@@ -43,18 +43,14 @@ const GiftTags = () => {
     e.preventDefault();
     if(editMode){
       const formData = new FormData();
-      console.log(tags)
       // Append text fields 
       formData.append("settingType", "Tags");
       formData.append("settings",JSON.stringify(tags) );
-      formData.forEach(v => {
-        console.log(v)
-      })
       const response = await fetch("http://localhost:4000/admin/settings", {
         method: "PUT",
         body: formData,
       });
-      console.log(response)
+
     }
     setEditMode(!editMode);
   };

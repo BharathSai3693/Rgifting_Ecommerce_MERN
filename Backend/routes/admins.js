@@ -69,12 +69,11 @@ router.get("/settings", async (req,res)=> {
 
 router.put("/settings",upload.none(), async (req,res)=> {
 
-  var newTags = JSON.parse(req.body.settings);
-  newTags = newTags.filter(tag => tag.trim() !== ''); 
+  var newSettings = JSON.parse(req.body.settings);
   try {
     const result = await Setting.findOneAndUpdate(
-      { settingType: 'Tags' },
-      { $set: { settings:  newTags} },
+      { settingType: req.body.settingType },
+      { $set: { settings:  newSettings } },
       { new: true, upsert: true }
     );
 
