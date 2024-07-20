@@ -11,8 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const GiftVariants = () => {
   const [expanded, setExpanded] = useState(false);
-  const { variants, setVariants, checkedVariants, setCheckedVariants } =
-    useContext(FormContext);
+  const { variants, setVariants, checkedVariants, setCheckedVariants } = useContext(FormContext);
+  console.log(variants)
+  console.log(checkedVariants)
   const [isEditing, setIsEditing] = useState(false);
   const [newVariantName, setNewVariantName] = useState("");
   const [newVariantValue, setNewVariantValue] = useState("");

@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const { S3Client } = require('@aws-sdk/client-s3');
+const { S3Client, ListBucketsCommand } = require('@aws-sdk/client-s3');
 
 
 
@@ -11,11 +11,6 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Initialize AWS S3
-// const s3 = new aws.S3({
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//     region: process.env.AWS_REGION,
-//   });
 const s3Client = new S3Client({
     region: process.env.AWS_REGION,
     credentials: {
@@ -28,9 +23,7 @@ global.s3Client = s3Client;
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-    origin: 'http://localhost:3000',
-  }));
+app.use(cors({origin: 'http://localhost:3000',}));
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI)

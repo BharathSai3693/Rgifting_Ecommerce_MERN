@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 import { FormContext } from './FormContext';
 
 const GiftPhotos = () => {
-  const { Photos, setPhotos } = useContext(FormContext);
+
+  const {Photos, setPhotos} =useContext(FormContext);
+
 
   const handleFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
-    setPhotos(prevPhotos => [...prevPhotos, ...selectedFiles]);
-  };
-
-  const handleRemovePhoto = (index) => {
-    setPhotos(prevPhotos => prevPhotos.filter((_, i) => i !== index));
+    setPhotos(selectedFiles);
   };
 
   return (
@@ -44,9 +42,9 @@ const GiftPhotos = () => {
                 id="file-upload"
                 name="file-upload"
                 type="file"
-                multiple
+                multiple  // Allow multiple file selection
                 className="sr-only"
-                onChange={handleFileChange}
+                onChange={handleFileChange}  // Handle file selection change
               />
             </label>
             <p className="pl-1">or drag and drop</p>
@@ -56,30 +54,15 @@ const GiftPhotos = () => {
           </p>
         </div>
       </div>
-      {/* Display selected images in a grid */}
-      <div className="mt-4 grid grid-cols-4 gap-4">
-        {Photos.length > 0 && Photos.map((file, index) => {
-          const imageUrl = URL.createObjectURL(file);
-          return (
-            <div key={index} className="relative w-full h-64">
-              <img
-                src={imageUrl}
-                alt={file.name}
-                className="object-cover w-full h-full rounded"
-                style={{ objectFit: 'cover' }}
-                height={'100px'}
-                width={'100px'}
-              />
-              <button
-                type="button"
-                onClick={() => handleRemovePhoto(index)}
-                className="absolute top-0 right-0 m-1 p-1 rounded-full bg-red-600 text-white text-xs hover:bg-red-700"
-              >
-                &times;
-              </button>
-            </div>
-          );
-        })}
+      {/* Display selected files */}
+      <div className="mt-4">
+        {Photos.length > 0 && (
+          <ul className="list-disc list-inside text-sm text-gray-600">
+            {Photos.map((file, index) => (
+              <li key={index}>{file.name}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

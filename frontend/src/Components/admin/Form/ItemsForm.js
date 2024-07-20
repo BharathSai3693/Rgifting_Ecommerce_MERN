@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Giftname from "./Giftname";
 import GiftPrice from "./GiftPrice";
 import GiftSummary from "./GiftSummary";
@@ -9,20 +9,64 @@ import GiftVariants from "./GiftVariants";
 import GiftPhotos from "./GiftPhotos";
 import GiftCategory from "./GiftCategory";
 import { FormContext } from "./FormContext";
-import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
-const ItemsForm = () => {
+const ItemsForm = ({ editMode }) => {
+  const {id} = useParams();
   const {
     name,
+    setName,
     price,
+    setPrice,
     summary,
+    setSummary,
     desc,
+    setDesc,
     Photos,
+    setPhotos,
     highlights,
+    setHighlights,
     checkedTags,
+    setCheckedTags,
     checkedVariants,
+    setCheckedVariants,
     selectedCategories,
+    setSelectedCategories,
   } = useContext(FormContext);
+  const [gift, setGift] = useState([]);
+
+  useEffect(() => {
+    if (editMode) {
+      fetch(`http://localhost:4000/admin/gift/${id}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setGift(data.gift);
+          var gData = data.gift;
+
+          setName(gData.name)
+          setPrice(gData.price)
+          setSummary(gData.summary)
+          setDesc(gData.desc)
+          setPhotos(gData.photos)
+          setHighlights(gData.highlights)
+          setCheckedTags(gData.checkedTags)
+
+          Object.keys(gData.checkedVariants).map(key => {
+            gData.checkedVariants[key] = new Set(gData.checkedVariants[key]);
+          })
+          setCheckedVariants(gData.checkedVariants)
+          setSelectedCategories(gData.selectedCategories)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,28 +86,49 @@ const ItemsForm = () => {
 
     formData.append("checkedVariants", JSON.stringify(variantResult));
     formData.append("selectedCategories", JSON.stringify(selectedCategories));
-
+    console.log(Photos);
     // Append files
     Photos.forEach((photo, index) => {
       formData.append(`giftPhotos`, photo);
     });
 
-
-    try {
-      const response = await fetch("http://localhost:4000/admin/newGift", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+    if(editMode){
+      try {
+        const response = await fetch(`http://localhost:4000/admin/gift/${id}`, {
+          method: "PUT",
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        console.log("Edits saved successfully:", result);
+      } catch (error) {
+        console.error("Error Editing file:", error);
       }
 
-      const result = await response.json();
-      console.log("File uploaded successfully:", result);
-    } catch (error) {
-      console.error("Error uploading file:", error);
     }
+    else{
+
+      try {
+        const response = await fetch("http://localhost:4000/admin/newGift", {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+  
+        const result = await response.json();
+        console.log("File uploaded successfully:", result);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+
+    }
+    
   };
 
   return (

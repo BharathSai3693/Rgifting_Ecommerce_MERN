@@ -14,7 +14,7 @@ export const FormProvider = ({ children }) => {
       return response.json();
     })
     .then(data => {
-      console.log(data.settings)
+
       setTags(data.settings.filter(x => {return x.settingType=="Tags"})[0]['settings'])
       setVariants(data.settings.filter(x => {return x.settingType=="variants"})[0]['settings'])
       setCategories(data.settings.filter(x => {return x.settingType=="categories"})[0]['settings'])
@@ -24,8 +24,13 @@ export const FormProvider = ({ children }) => {
     });
   }, [])
 
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState('');
+  const [summary, setSummary] = useState('');
+  const [desc, setDesc] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState({});
+
   const [Photos, setPhotos] = useState([]);
   const [highlights, setHighlights] = useState(['']);
   const [variants, setVariants] = useState({});
@@ -38,10 +43,7 @@ export const FormProvider = ({ children }) => {
   const [tags, setTags] = useState([]);
   const [checkedTags, setCheckedTags] = useState([]);
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState('');
-  const [summary, setSummary] = useState('');
-  const [desc, setDesc] = useState('');
+ 
 
   return (
     <FormContext.Provider value={{name, setName, price, 
