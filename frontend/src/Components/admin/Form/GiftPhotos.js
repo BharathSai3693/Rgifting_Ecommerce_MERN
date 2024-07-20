@@ -1,14 +1,30 @@
-import React, { useContext } from 'react';
-import { FormContext } from './FormContext';
+import React, { useContext, useEffect, useState } from "react";
+import { FormContext } from "./FormContext";
 
 const GiftPhotos = () => {
-
-  const {Photos, setPhotos} =useContext(FormContext);
-
+  const { Photos, setPhotos } = useContext(FormContext);
+  const [dispPhotos, setDispPhotos] = useState([]); 
+  const [first, setFirst] = useState(false);
+  useEffect(() => {
+    if(Photos.length!=0 && !first){
+      setDispPhotos(Photos)
+      setFirst(!first); 
+    }
+    console.log(Photos)
+    console.log(dispPhotos)
+  }, [Photos]);
 
   const handleFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
-    setPhotos(selectedFiles);
+    setPhotos([...Photos, ...selectedFiles])
+    const newUrls = selectedFiles.map((file) => URL.createObjectURL(file));
+
+    setDispPhotos((prevPhotos) => [...prevPhotos, ...newUrls]);
+  };
+
+  const handleRemovePhoto = (index) => {
+    setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+    setDispPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
 
   return (
@@ -34,17 +50,15 @@ const GiftPhotos = () => {
             />
           </svg>
           <div className="mt-4 flex text-sm leading-6 text-gray-600">
-            <label
-              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-            >
+            <label className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
               <span>Upload files</span>
               <input
                 id="file-upload"
                 name="file-upload"
                 type="file"
-                multiple  // Allow multiple file selection
+                multiple
                 className="sr-only"
-                onChange={handleFileChange}  // Handle file selection change
+                onChange={handleFileChange}
               />
             </label>
             <p className="pl-1">or drag and drop</p>
@@ -54,15 +68,30 @@ const GiftPhotos = () => {
           </p>
         </div>
       </div>
-      {/* Display selected files */}
-      <div className="mt-4">
-        {Photos.length > 0 && (
-          <ul className="list-disc list-inside text-sm text-gray-600">
-            {Photos.map((file, index) => (
-              <li key={index}>{file.name}</li>
-            ))}
-          </ul>
-        )}
+      {/* Display selected images in a grid */}
+      <div className="mt-4 grid grid-cols-4 gap-4">
+        {dispPhotos.length > 0 &&
+          dispPhotos.map((file, index) => {
+            const imageUrl = file;
+            return (
+              <div key={index} className="relative w-full h-64">
+                <img
+                  src={imageUrl}
+                  className="object-cover w-full h-full rounded"
+                  style={{ objectFit: "cover" }}
+                  height={"100px"}
+                  width={"100px"}
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemovePhoto(index)}
+                  className="absolute top-0 right-0 m-1 p-1 rounded-full bg-red-600 text-white text-xs hover:bg-red-700"
+                >
+                  &times;
+                </button>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
